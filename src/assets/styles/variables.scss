@@ -1,14 +1,48 @@
-/* 变量文件：src/assets/styles/variables.scss */
+/* 基础主题色 */
+$primary-color: #007175;
+/* 可根据需要修改基础色 */
+
+/* 生成不同透明度的颜色 */
+$primary-light: lighten($primary-color, 10%);
+/* 浅色 */
+$primary-dark: darken($primary-color, 10%);
+/* 深色 */
+$primary-transparent-10: rgba($primary-color, 0.1);
+/* 10% 透明度 */
+$primary-transparent-30: rgba($primary-color, 0.3);
+/* 30% 透明度 */
+$primary-transparent-50: rgba($primary-color, 0.5);
+/* 50% 透明度 */
+$primary-transparent-70: rgba($primary-color, 0.7);
+/* 70% 透明度 */
+
+/* 激活背景色 */
+$menu-active-bg: mix($primary-color, #ffffff, 60%);
+/* 激活背景 */
+
+/* 设置白天模式的 CSS 变量 */
 :root {
-    /* 日间模式 */
     --background-color: #ffffff;
     --text-color: #000000;
+    --primary-color: #{$primary-color};
+
+
+    --primary-transparent-10: #{$primary-transparent-10};
+    --primary-transparent-30: #{$primary-transparent-30};
+    --primary-transparent-50: #{$primary-transparent-50};
+    --primary-transparent-70: #{$primary-transparent-70};
 }
 
+/* 设置夜间模式的 CSS 变量 */
 [data-theme="dark"] {
-    /* 夜间模式 */
-    --background-color: #1e1e1e;
+    --background-color: #1b1b1f;
     --text-color: #ffffff;
+    --primary-color: #{$primary-color};
+
+    --primary-transparent-10: #{$primary-transparent-10};
+    --primary-transparent-30: #{$primary-transparent-30};
+    --primary-transparent-50: #{$primary-transparent-50};
+    --primary-transparent-70: #{$primary-transparent-70};
 }
 
 /* 应用变量 */
@@ -16,3 +50,6 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
 }
+
+/* 导入 Element Plus 的菜单样式 */
+@import '../styles/element-plus/menu.scss';
