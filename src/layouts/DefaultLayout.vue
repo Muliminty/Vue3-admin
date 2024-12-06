@@ -1,19 +1,28 @@
-<template>
+<!-- <template>
     <div class="default-layout">
-        <!-- 布局部分 -->
         <header>
             <h1>{{ defaultLayout.title }}</h1>
             <p>{{ defaultLayout.content }}</p>
         </header>
 
-        <!-- 导航部分 -->
         <nav class="nav-links">
             <router-link to="/dashboard" aria-label="Go to Dashboard">Dashboard</router-link>
             <router-link to="/users" aria-label="Go to Users">Users</router-link>
         </nav>
 
-        <!-- 路由视图 -->
         <router-view />
+    </div>
+</template> -->
+<template>
+    <div class="common-layout">
+        <el-container>
+            <el-aside width="200px">Aside</el-aside>
+            <el-container>
+                <el-header>Header</el-header>
+                <el-main>Main</el-main>
+                <el-footer>Footer</el-footer>
+            </el-container>
+        </el-container>
     </div>
 </template>
 
@@ -28,33 +37,38 @@ const defaultLayout = reactive({
 </script>
 
 <style scoped>
-.default-layout {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+.el-header,
+.el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
 }
 
-header {
-    margin-bottom: 20px;
+.el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
 }
 
-nav {
-    margin-top: 20px;
+.el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: center;
+    line-height: 160px;
 }
 
-.nav-links {
-    display: flex;
-    gap: 10px;
+body>.el-container {
+    margin-bottom: 40px;
 }
 
-.nav-links a {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-    text-decoration: none;
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+    line-height: 260px;
 }
 
-.nav-links a:hover {
-    background-color: #0056b3;
+.el-container:nth-child(7) .el-aside {
+    line-height: 320px;
 }
 </style>
