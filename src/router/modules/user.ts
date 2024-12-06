@@ -5,6 +5,13 @@ const userRoutes: RouteRecordRaw[] = [
         path: '/users',
         name: 'UserList',
         component: () => import('@/views/User/UserList.vue'),
+        children: [
+            {
+                path: ':id',  // 子路由路径，带参数
+                name: 'UserDetail',
+                component: () => import('@/views/User/UserDetail.vue'),
+            },
+        ],
     },
     // {
     //     path: '/users/:id',

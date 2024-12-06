@@ -1,9 +1,18 @@
 <template>
-    <div>
-        <h1>用户列表</h1>
-        <ul>
-            <li v-for="user in users" :key="user.id">{{ user.name }}</li>
-        </ul>
+    <div class="user">
+        <div>
+            <h1>用户列表</h1>
+            <ul>
+                <li v-for="user in users" :key="user.id">
+                    <router-link :to="`/users/${user.id}`">{{ user.name }}</router-link>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 在这里渲染嵌套路由 -->
+        <div>
+            <router-view />
+        </div>
     </div>
 </template>
 
@@ -20,5 +29,28 @@ const users = ref([
 <style scoped>
 h1 {
     color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+}
+
+.user {
+    display: flex;
+}
+
+
+router-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+router-link:hover {
+    text-decoration: underline;
 }
 </style>
