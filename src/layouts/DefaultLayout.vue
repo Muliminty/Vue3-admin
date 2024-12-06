@@ -27,13 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-
-// 使用 reactive 来替代 ref，方便管理对象数据
-const defaultLayout = reactive({
-    title: '默认布局',
-    content: '这是默认布局的内容',
-});
 </script>
 
 <style scoped>
@@ -70,5 +63,60 @@ body>.el-container {
 
 .el-container:nth-child(7) .el-aside {
     line-height: 320px;
+}
+
+/* 媒体查询：针对移动端（最大宽度为768px） */
+@media (max-width: 768px) {
+    .el-container {
+        flex-direction: column;
+    }
+
+    .el-aside {
+        width: 100%;
+        line-height: 60px;
+    }
+
+    .el-main {
+        line-height: 100px;
+    }
+
+    .el-header,
+    .el-footer {
+        line-height: 40px;
+    }
+}
+
+/* 媒体查询：针对小型桌面端（最大宽度为1200px） */
+@media (max-width: 1200px) {
+    .el-aside {
+        width: 150px;
+        line-height: 180px;
+    }
+
+    .el-header,
+    .el-footer {
+        line-height: 50px;
+    }
+
+    .el-main {
+        line-height: 120px;
+    }
+}
+
+/* 媒体查询：针对更小的设备（最大宽度为480px） */
+@media (max-width: 480px) {
+
+    .el-header,
+    .el-footer {
+        line-height: 30px;
+    }
+
+    .el-aside {
+        line-height: 50px;
+    }
+
+    .el-main {
+        line-height: 80px;
+    }
 }
 </style>
