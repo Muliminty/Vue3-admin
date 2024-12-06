@@ -9,9 +9,6 @@ export default defineConfig({
     vueDevTools(),
   ],
   resolve: {
-    // alias: {
-    //   '@': path.resolve(__dirname, './src'),
-    // },
     alias: {
       '@': '/src',  // 确保正确配置了路径别名
     },
