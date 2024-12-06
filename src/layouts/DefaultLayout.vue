@@ -1,68 +1,73 @@
-<!-- <template>
-    <div class="default-layout">
-        <header>
-            <h1>{{ defaultLayout.title }}</h1>
-            <p>{{ defaultLayout.content }}</p>
-        </header>
-
-        <nav class="nav-links">
-            <router-link to="/dashboard" aria-label="Go to Dashboard">Dashboard</router-link>
-            <router-link to="/users" aria-label="Go to Users">Users</router-link>
-        </nav>
-
-        <router-view />
-    </div>
-</template> -->
 <template>
     <div class="common-layout">
         <el-container>
-            <el-aside width="200px">Aside</el-aside>
+            <el-aside class="aside">
+                <AsideMenu />
+            </el-aside>
             <el-container>
-                <el-header>Header</el-header>
-                <el-main>Main</el-main>
-                <el-footer>Footer</el-footer>
+                <el-header>
+                    <Header />
+                </el-header>
+                <el-main>
+                    <router-view />
+                </el-main>
+                <el-footer>
+                    <Footer />
+                </el-footer>
             </el-container>
         </el-container>
     </div>
 </template>
 
 <script setup lang="ts">
+import Header from '@/layouts/Header.vue'
+import Footer from '@/layouts/Footer.vue'
+import AsideMenu from '@/layouts/AsideMenu.vue'
 </script>
 
 <style scoped>
+.common-layout {
+    width: 100vw;
+    height: 100vh;
+    /* 确保布局填满整个视口 */
+    display: flex;
+    flex-direction: column;
+}
+
 .el-header,
 .el-footer {
     background-color: #B3C0D1;
+}
+
+.el-main {
+    background-color: #E9EEF3;
+    flex-grow: 1;
+    /* 让 el-main 占据剩余空间 */
+    overflow: auto;
+    /* 如果内容过多，可以滚动 */
+}
+
+/* .el-main {
+    background-color: #E9EEF3;
     color: #333;
     text-align: center;
-    line-height: 60px;
-}
+    line-height: 160px;
+} */
 
 .el-aside {
     background-color: #D3DCE6;
     color: #333;
     text-align: center;
-    line-height: 200px;
+    display: block;
+    /* 去掉固定宽度，改为自适应内容宽度 */
+    width: auto;
+    max-width: 300px;
 }
 
-.el-main {
-    background-color: #E9EEF3;
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-}
+
 
 body>.el-container {
-    margin-bottom: 40px;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-    line-height: 320px;
+    /* margin-bottom: 40px; */
 }
 
 /* 媒体查询：针对移动端（最大宽度为768px） */
@@ -74,6 +79,7 @@ body>.el-container {
     .el-aside {
         width: 100%;
         line-height: 60px;
+        display: none;
     }
 
     .el-main {
@@ -89,7 +95,6 @@ body>.el-container {
 /* 媒体查询：针对小型桌面端（最大宽度为1200px） */
 @media (max-width: 1200px) {
     .el-aside {
-        width: 150px;
         line-height: 180px;
     }
 
@@ -113,6 +118,7 @@ body>.el-container {
 
     .el-aside {
         line-height: 50px;
+        display: none;
     }
 
     .el-main {
