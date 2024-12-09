@@ -48,27 +48,27 @@ const handleOpen = (value: boolean) => {
 
 .el-header,
 .el-footer {
-    background-color: #B3C0D1;
+    background-color: var(--background-color);
 }
 
 .el-main {
-    background-color: #E9EEF3;
+    /* background-color: #E9EEF3; */
     flex-grow: 1;
     /* 让 el-main 占据剩余空间 */
     overflow: auto;
     /* 如果内容过多，可以滚动 */
 }
 
-/* .el-main {
+.el-main {
     background-color: #E9EEF3;
-    color: #333;
+    color: var(--text-color);
     text-align: center;
     line-height: 160px;
-} */
+}
 
 .el-aside {
-    background-color: #D3DCE6;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
     text-align: center;
     display: block;
     /* 去掉固定宽度，改为自适应内容宽度 */

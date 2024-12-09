@@ -1,15 +1,15 @@
 <template>
     <div class="header">
         <h1>
-            <button @click="toggleAside">{{ open ? '开' : '关' }}</button>
-            Header
+            <span @click="toggleAside" style="margin-right: 10px;">{{ open ? '开' : '关' }}</span>
+            <span>Header</span>
         </h1>
 
         <div style="display: flex;">
             <!-- 主题切换按钮 -->
-            <button @click="toggleTheme" style="margin-right: 15px;">
+            <div @click="toggleTheme" style="margin-right: 15px;">
                 {{ theme.current === 'light' ? '黑间模式' : '白天模式' }}
-            </button>
+            </div>
 
             <!-- 主题色选择器 -->
             <div style="display: flex; align-items: center;">
@@ -51,5 +51,6 @@ const toggleAside = () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: var(--text-color)
 }
 </style>
