@@ -1,10 +1,7 @@
 <template>
-
-
     <!-- 菜单组件 -->
     <div class="menu-box">
-        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse" @open="handleOpen"
-            @close="handleClose">
+        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="open">
             <el-sub-menu index="1">
                 <template #title>
                     <el-icon>
@@ -45,10 +42,7 @@
             </el-menu-item>
         </el-menu>
 
-        <!-- 切换折叠和展开的按钮 -->
-        <div class="collapse-box">
-            <el-button @click="toggleCollapse" type="primary">{{ isCollapse ? '开' : '关' }}</el-button>
-        </div>
+
     </div>
 
 </template>
@@ -62,20 +56,12 @@ import {
     Setting,
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(true)  // 控制菜单是否折叠
+import { defineProps } from 'vue';
+// 接收父组件传递的 open 状态
+const props = defineProps({
+    open: Boolean,
+});
 
-// 切换折叠和展开状态
-const toggleCollapse = () => {
-    isCollapse.value = !isCollapse.value
-}
-
-const handleOpen = (key: string, keyPath: string[]) => {
-    console.log('Open:', key, keyPath)
-}
-
-const handleClose = (key: string, keyPath: string[]) => {
-    console.log('Close:', key, keyPath)
-}
 </script>
 
 <style>

@@ -2,11 +2,11 @@
     <div class="common-layout">
         <el-container>
             <el-aside class="aside">
-                <AsideMenu />
+                <AsideMenu :open="open" />
             </el-aside>
             <el-container>
                 <el-header>
-                    <Header />
+                    <Header :open="open" @handleOpen="handleOpen" />
                 </el-header>
                 <el-main>
                     <router-view />
@@ -23,6 +23,18 @@
 import Header from '@/layouts/Header.vue'
 import Footer from '@/layouts/Footer.vue'
 import AsideMenu from '@/layouts/AsideMenu.vue'
+
+import { ref } from 'vue'
+
+
+// 定义 open 状态
+const open = ref(false);
+
+// 定义 Header 的事件处理函数
+const handleOpen = (value: boolean) => {
+    open.value = !open.value;
+};
+
 </script>
 
 <style scoped>
