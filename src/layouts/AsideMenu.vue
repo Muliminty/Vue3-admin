@@ -1,6 +1,6 @@
 <template>
     <div class="menu-box">
-        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="open" @select="handleMenuSelect">
+        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="props.open" @select="handleMenuSelect">
             <template v-for="menu in menuList" :key="menu.index">
                 <!-- 判断是否为子菜单 -->
                 <el-sub-menu v-if="menu.children" :index="menu.index">

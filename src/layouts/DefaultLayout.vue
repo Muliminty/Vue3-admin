@@ -30,7 +30,7 @@ const open = ref<boolean>(false);
 
 // 事件处理函数，切换菜单状态
 const handleOpen = (value: boolean) => {
-    open.value = value; // 更新 open 状态
+    open.value = !open.value; // 更新 open 状态
 };
 </script>
 
