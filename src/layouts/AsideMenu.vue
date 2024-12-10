@@ -5,14 +5,17 @@
                 <!-- 判断是否为子菜单 -->
                 <el-sub-menu v-if="menu.children" :index="menu.index">
                     <template #title>
-                        <el-icon>
-                            <component :is="menu.icon" />
+                        <el-icon v-if="menu.props?.icon">
+                            <component :is="menu.props.icon" />
                         </el-icon>
                         <span>{{ menu.name }}</span>
                     </template>
                     <!-- 渲染子菜单 -->
                     <el-menu-item v-for="subMenu in menu.children" :key="subMenu.index" :index="subMenu.index"
                         :disabled="subMenu.disabled">
+                        <el-icon v-if="subMenu.props?.icon">
+                            <component :is="subMenu.props.icon" />
+                        </el-icon>
                         {{ subMenu.name }}
                     </el-menu-item>
                 </el-sub-menu>
@@ -20,8 +23,8 @@
                 <!-- 普通菜单项 -->
                 <el-menu-item v-else :index="menu.index" :key="menu.index" :disabled="menu.disabled"
                     v-show="!menu?.props?.hiddenMenu">
-                    <el-icon>
-                        <component :is="menu.icon" />
+                    <el-icon v-if="menu.props?.icon">
+                        <component :is="menu.props.icon" />
                     </el-icon>
                     <span>{{ menu.name }}</span>
                 </el-menu-item>

@@ -10,7 +10,15 @@ import '@/assets/styles/reset.scss'
 import { createPinia } from 'pinia';
 import { useAppStore } from "@/store/modules/app";
 
-const app = createApp(App);
+// 如果您正在使用CDN引入，请删除下面一行。
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+const app = createApp(App)
+
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
+
 
 // 创建并注册 Pinia
 const pinia = createPinia();

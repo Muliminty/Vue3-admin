@@ -20,30 +20,27 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import Header from '@/layouts/Header.vue'
 import Footer from '@/layouts/Footer.vue'
 import AsideMenu from '@/layouts/AsideMenu.vue'
 
-import { ref } from 'vue'
+// 定义 open 状态及类型为 boolean
+const open = ref<boolean>(false);
 
-
-// 定义 open 状态
-const open = ref(false);
-
-// 定义 Header 的事件处理函数
+// 事件处理函数，切换菜单状态
 const handleOpen = (value: boolean) => {
-    open.value = !open.value;
+    open.value = value; // 更新 open 状态
 };
-
 </script>
 
 <style scoped>
 .common-layout {
+    display: flex;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
     /* 确保布局填满整个视口 */
-    display: flex;
-    flex-direction: column;
 }
 
 .el-header,
@@ -52,14 +49,10 @@ const handleOpen = (value: boolean) => {
 }
 
 .el-main {
-    /* background-color: #E9EEF3; */
     flex-grow: 1;
     /* 让 el-main 占据剩余空间 */
     overflow: auto;
-    /* 如果内容过多，可以滚动 */
-}
-
-.el-main {
+    /* 内容过多时可以滚动 */
     background-color: #E9EEF3;
     color: var(--text-color);
     text-align: center;
@@ -70,16 +63,9 @@ const handleOpen = (value: boolean) => {
     background-color: var(--background-color);
     color: var(--text-color);
     text-align: center;
-    display: block;
-    /* 去掉固定宽度，改为自适应内容宽度 */
     width: auto;
     max-width: 300px;
-}
-
-
-
-body>.el-container {
-    /* margin-bottom: 40px; */
+    /* 设置最大宽度 */
 }
 
 /* 媒体查询：针对移动端（最大宽度为768px） */
@@ -92,6 +78,7 @@ body>.el-container {
         width: 100%;
         line-height: 60px;
         display: none;
+        /* 默认隐藏侧边栏 */
     }
 
     .el-main {
@@ -131,6 +118,7 @@ body>.el-container {
     .el-aside {
         line-height: 50px;
         display: none;
+        /* 默认隐藏侧边栏 */
     }
 
     .el-main {
