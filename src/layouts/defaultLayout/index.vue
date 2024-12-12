@@ -21,9 +21,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import Header from '@/layouts/Header.vue'
-import Footer from '@/layouts/Footer.vue'
-import AsideMenu from '@/layouts/AsideMenu.vue'
+import Header from '@/layouts/defaultLayout/Header.vue'
+import Footer from '@/layouts/defaultLayout/Footer.vue'
+import AsideMenu from '@/layouts/defaultLayout/AsideMenu.vue'
 
 // 定义 open 状态及类型为 boolean
 const open = ref<boolean>(false);

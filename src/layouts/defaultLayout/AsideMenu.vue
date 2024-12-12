@@ -62,9 +62,9 @@ const menuList = addMenuIndex(routes);
 // 使用 Vue Router 进行导航
 const router = useRouter();
 
-const handleClick = (index: string) => {
-    console.log(index);
-}
+// const handleClick = (index: string) => {
+//     console.log(index);
+// }
 
 const handleMenuSelect = (index: string) => {
     console.log(menuList);
