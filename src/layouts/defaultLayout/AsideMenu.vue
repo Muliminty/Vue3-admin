@@ -1,6 +1,7 @@
 <template>
     <div class="menu-box">
-        <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="props.open" @select="handleMenuSelect">
+        <el-menu :default-active="addMenuIndex" class="el-menu-vertical-demo" :collapse="props.open"
+            @select="handleMenuSelect">
             <template v-for="menu in menuList" :key="menu.index">
                 <!-- 判断是否为子菜单 -->
                 <el-sub-menu v-if="menu.children" :index="menu.index">
@@ -34,8 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { routes } from '@/router/modules/index.ts'; // 引入菜单配置
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
     open: Boolean, // 是否折叠菜单
@@ -59,25 +61,49 @@ const addMenuIndex = (menus: any[], parentIndex: string = ''): any[] => {
 // 动态菜单列表
 const menuList = addMenuIndex(routes);
 
-// 使用 Vue Router 进行导航
+// 获取当前路由
+const route = useRoute();
 const router = useRouter();
 
-// const handleClick = (index: string) => {
-//     console.log(index);
-// }
+// 根据路由路径查找菜单的索引
+const getActiveMenuIndex = (path: string) => {
+    const findMenuIndex = (menus: any[], parentIndex: string = '') => {
+        for (const menu of menus) {
+            console.log('Checking menu:', menu.path, path);  // 调试：打印检查路径
 
+            // 如果路径匹配或路径前缀匹配
+            if (path === menu.path || path.startsWith(menu.path)) {
+                return parentIndex;  // 路由路径匹配时返回当前索引
+            }
+
+            if (menu.children) {
+                const childIndex = findMenuIndex(menu.children, `${parentIndex}${menu.index}-`);
+                if (childIndex) return childIndex;
+            }
+        }
+        return '';  // 没有找到匹配项时返回空字符串
+    };
+
+    return findMenuIndex(menuList, '');
+};
+
+
+// 使用 ref 和 onMounted 保证页面渲染后才计算 activeIndex
+const activeIndex = ref('dashboard');
+
+onMounted(() => {
+    console.log('route.path:', route.path);  // 调试：打印当前路由路径
+    activeIndex.value = getActiveMenuIndex(route.path); // 在 mounted 后计算默认选中的菜单项
+    console.log('activeIndex:', activeIndex.value);  // 打印 activeIndex 以确认值
+});
+
+// 处理菜单点击
 const handleMenuSelect = (index: string) => {
-    console.log(menuList);
+    console.log('handleMenuSelect:', index);  // 调试：打印点击的菜单项索引
     const selectedMenu = findMenuByIndex(index, menuList); // 查找菜单项
     if (selectedMenu) {
-        // 如果路径是动态的（例如带有参数 :id），传递相应的参数
         const path = selectedMenu.path;
-        if (path && path.includes(':id')) {
-            // 如果路径包含 :id，跳转时需要传递动态参数
-            const userId = 123; // 这里的 123 是示例，你应该根据需求获取实际的 ID
-            router.push({ path: path.replace(':id', userId.toString()) });
-        } else {
-            // 普通路径
+        if (path) {
             router.push(path);
         }
     }

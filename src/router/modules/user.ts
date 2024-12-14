@@ -7,6 +7,7 @@ const userRoutes: RouteRecordRaw[] = [
         // name: 'UserList',
         component: () => import('@/views/User/UserList.vue'),
         props: { icon: User },  // 将图标作为组件传递
+        meta: { layout: 'default' }, // 设置为 'empty' 布局
     },
     {
         path: '/users/:id',
@@ -16,6 +17,8 @@ const userRoutes: RouteRecordRaw[] = [
             hiddenMenu: true,
             icon: Edit  // 将图标作为组件传递
         },
+        meta: { layout: 'default' }, // 设置为 'empty' 布局
+
     },
     {
         path: '/test',
@@ -23,6 +26,8 @@ const userRoutes: RouteRecordRaw[] = [
         props: {
             icon: Link,  // 将图标作为组件传递
         },
+        meta: { layout: 'default' }, // 设置为 'empty' 布局
+
         children: [
             {
                 path: '/test1',

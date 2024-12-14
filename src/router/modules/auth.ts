@@ -4,17 +4,11 @@ const authRoutes: RouteRecordRaw[] = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import('@/views/Auth/Login.vue'), // 懒加载组件
+        component: () => import('@/views/Auth/Login.vue'),
+        meta: { layout: 'empty' }, // 设置为 'empty' 布局
         props: {
             hiddenMenu: true,
-            layout: 'empty',
-        }
+        },
     },
-    // {
-    //     path: '/register',
-    //     name: 'Register',
-    //     component: () => import('@/views/Auth/Register.vue'),
-    // },
 ];
-
 export default authRoutes;

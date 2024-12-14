@@ -6,7 +6,10 @@ const dashboardRoutes: RouteRecordRaw[] = [
         // name: 'Dashboard',
         component: () => import('@/views/Dashboard/Dashboard.vue'),
         props: { icon: DataAnalysis },  // 将图标作为组件传递
-        meta: { requiresAuth: true }, // 路由元信息
+        meta: {
+            requiresAuth: true,
+            layout: 'default',
+        }, // 路由元信息
     },
 ];
 
