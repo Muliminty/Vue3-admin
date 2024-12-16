@@ -40,7 +40,7 @@ export default {
 
         if (response.success) {
           // 登录成功后跳转到 dashboard
-          router.push('/user');
+          router.push('/users');
         } else {
           errorMessage.value = '用户名或密码错误';
         }

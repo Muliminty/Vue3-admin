@@ -1,6 +1,6 @@
 <template>
     <div class="menu-box">
-        <el-menu :default-active="addMenuIndex" class="el-menu-vertical-demo" :collapse="props.open"
+        <el-menu :default-active="activeIndex" class="el-menu-vertical-demo" :collapse="props.open"
             @select="handleMenuSelect">
             <template v-for="menu in menuList" :key="menu.index">
                 <!-- 判断是否为子菜单 -->
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
 import { routes } from '@/router/modules/index.ts'; // 引入菜单配置
-import { onMounted, ref } from 'vue';
+import { watch, ref } from 'vue';
 
 const props = defineProps({
     open: Boolean, // 是否折叠菜单
@@ -65,41 +65,64 @@ const menuList = addMenuIndex(routes);
 const route = useRoute();
 const router = useRouter();
 
-// 根据路由路径查找菜单的索引
-const getActiveMenuIndex = (path: string) => {
-    const findMenuIndex = (menus: any[], parentIndex: string = '') => {
-        for (const menu of menus) {
-            console.log('Checking menu:', menu.path, path);  // 调试：打印检查路径
 
-            // 如果路径匹配或路径前缀匹配
-            if (path === menu.path || path.startsWith(menu.path)) {
-                return parentIndex;  // 路由路径匹配时返回当前索引
+/**
+ * 根据路由路径查找菜单的索引
+ * @param {string} path - 路由路径
+ * @returns {string} - 对应的菜单索引
+ */
+const getActiveMenuIndex = (path: string): string => {
+    /**
+     * 内部递归函数，用于在菜单列表中查找匹配路径的菜单
+     * @param {any[]} menus - 菜单列表
+     * @returns {string} - 匹配的菜单索引
+     */
+    const findMenuIndex = (menus: any[]): string => {
+        let matchedMenu: { index: string; path: string } | null = null;
+
+        for (const menu of menus) {
+            // 如果路径完全匹配，则直接返回当前菜单的 index
+            if (menu.path === path) {
+                return menu.index;
             }
 
+            // 如果路径部分匹配（即 path 是某个父级菜单路径的前缀），暂存匹配项，但继续深入查找更精确的路径
+            if (menu.path && path.startsWith(menu.path)) {
+                matchedMenu = { index: menu.index, path: menu.path };
+            }
+
+            // 如果存在子菜单，递归查找
             if (menu.children) {
-                const childIndex = findMenuIndex(menu.children, `${parentIndex}${menu.index}-`);
-                if (childIndex) return childIndex;
+                const childIndex = findMenuIndex(menu.children);
+                if (childIndex) return childIndex; // 如果子菜单中找到了匹配项，优先返回子菜单的索引
             }
         }
-        return '';  // 没有找到匹配项时返回空字符串
+
+        // 如果没有更精确的匹配项，则返回部分匹配的父菜单索引
+        return matchedMenu ? matchedMenu.index : '';
     };
 
-    return findMenuIndex(menuList, '');
+    return findMenuIndex(menuList);
 };
 
 
-// 使用 ref 和 onMounted 保证页面渲染后才计算 activeIndex
-const activeIndex = ref('dashboard');
 
-onMounted(() => {
-    console.log('route.path:', route.path);  // 调试：打印当前路由路径
-    activeIndex.value = getActiveMenuIndex(route.path); // 在 mounted 后计算默认选中的菜单项
-    console.log('activeIndex:', activeIndex.value);  // 打印 activeIndex 以确认值
-});
+// 使用 ref 和 onMounted 保证页面渲染后才计算 activeIndex
+const activeIndex = ref('');
+
+watch(
+    () => route.path,
+    (newPath) => {
+        console.log('newPath', newPath);
+        activeIndex.value = getActiveMenuIndex(newPath);
+        console.log('activeIndex.value: ', activeIndex.value)
+    },
+    { immediate: true }
+);
+
 
 // 处理菜单点击
 const handleMenuSelect = (index: string) => {
-    console.log('handleMenuSelect:', index);  // 调试：打印点击的菜单项索引
     const selectedMenu = findMenuByIndex(index, menuList); // 查找菜单项
     if (selectedMenu) {
         const path = selectedMenu.path;
