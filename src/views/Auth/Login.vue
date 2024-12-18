@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { ref } from 'vue';
+import { useAuth } from '@/hooks/useAuth'; // 引入登录逻辑
 import { useRouter } from 'vue-router';
 
 export default {
@@ -27,6 +28,7 @@ export default {
     const username = ref('');
     const password = ref('');
     const errorMessage = ref('');
+    const { login: apiLogin } = useAuth(); // 使用封装的登录逻辑
 
     const login = async () => {
       if (!username.value || !password.value) {
@@ -35,31 +37,15 @@ export default {
       }
 
       try {
-        // 假设登录验证是通过 API 调用的
-        const response = await fakeLoginApi(username.value, password.value);
+        // 调用 API 登录接口
+        await apiLogin(username.value, password.value);
 
-        if (response.success) {
-          // 登录成功后跳转到 dashboard
-          router.push('/users');
-        } else {
-          errorMessage.value = '用户名或密码错误';
-        }
-      } catch (error) {
-        errorMessage.value = '登录失败，请稍后重试';
+        // 登录成功后跳转到用户页面
+        router.push('/users');
+      } catch (error: any) {
+        // 显示错误提示
+        errorMessage.value = error.message || '登录失败，请稍后重试';
       }
-    };
-
-    // 假设的登录 API
-    const fakeLoginApi = (username: string, password: string) => {
-      return new Promise<{ success: boolean }>((resolve) => {
-        setTimeout(() => {
-          if (username === 'admin' && password === '123') {
-            resolve({ success: true });
-          } else {
-            resolve({ success: false });
-          }
-        }, 1000);
-      });
     };
 
     return {
@@ -71,6 +57,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .login-container {
